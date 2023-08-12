@@ -24,12 +24,12 @@ def resync_metagraph():
     
     bt.logging.info("Metagraph synced!")
 
-# Function to check the top 50 UIDs in the metagraph and extract their IPs
+# Function to check the top 40 UIDs in the metagraph and extract their IPs
 def check_metagraph():
     bt.logging.info("check_metagraph()")
     
-    # Extract the indices of the top 50 stakes
-    indices = torch.topk(metagraph.stake, 50).indices
+    # Extract the indices of the top 40 stakes
+    indices = torch.topk(metagraph.stake, 40).indices
     
     # Extract the corresponding UIDs
     uids_with_highest_stake = metagraph.uids[indices].tolist()
@@ -44,7 +44,7 @@ def check_metagraph():
     unique_ip_to_uid = {ip: uid for ip, uid in zip(ips, uids_with_highest_stake)}
     ips = list(unique_ip_to_uid.keys())
     
-    bt.logging.info(f"Top 50 uids: {uids_with_highest_stake}")
+    bt.logging.info(f"Top 40 uids: {uids_with_highest_stake}")
     
     return ips
 
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         # Resync the metagraph
         resync_metagraph()
         
-        # Get the IPs of the top 50 validators
+        # Get the IPs of the top 40 validators
         ips = check_metagraph()
         
         # Transform the IPs to a specific format
@@ -102,6 +102,6 @@ if __name__ == "__main__":
         # Whitelist the IPs in UFW
         whitelist_ips_in_ufw(ips)
         
-        # Wait for 100 blocks (approximately 1200 seconds or 20 minutes)
-        bt.logging.info("Waiting for 100 blocks, sleeping")
+        # Wait for 110 blocks (approximately 1200 seconds or 20 minutes)
+        bt.logging.info("Waiting for 110 blocks, sleeping")
         time.sleep(1200)
